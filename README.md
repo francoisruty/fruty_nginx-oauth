@@ -1,5 +1,7 @@
 This tutorial explains how to use an oauth proxy with Nginx, to secure your internal services.
 
+This refers to https://fruty.io/2018/04/16/protecting-your-internal-services-with-nginx-and-oauth2/
+
 ### Install Docker and Docker-compose
 
 Install Docker and Docker-compose, just follow the official procedures.
