@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+
+  load-balancer:
+    image: nginx
+    ports: ["80:80"]
+    volumes: ["./example.conf:/etc/nginx/conf.d/example.conf:ro"]
+
+  web-server:
+    image: nginx
+    volumes: ["./index.html:/usr/share/nginx/html/index.html"]
+
+
+  #NOTE the --upstream settings is useless (we do not proxy requests through oauth2-proxy, we only use it as authentication backend of nginx) but it must be present
+  authproxy:
+    build: .
+    command: /usr/bin/oauth2_proxy --upstream=http://127.0.0.1:80 --http-address="0.0.0.0:4180" --redirect-url=${REDIRECT_URL} --email-domain=${EMAIL_DOMAIN} --cookie-secret=${COOKIE_SECRET} --client-secret=${OAUTH2_SECRET} --client-id=${OAUTH2_ID} --cookie-secure=false
